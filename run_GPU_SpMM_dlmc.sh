@@ -21,6 +21,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 MATRIX_LIST_FILE=$1
+BASEPATH=$2
 
 mkdir -p GPU_SpMM_dlmc_result # Ensure directory exists
 
