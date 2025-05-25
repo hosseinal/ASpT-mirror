@@ -33,12 +33,12 @@ while read -r mtx_file_path; do
   if [ -z "$mtx_file_path" ]; then # Skip empty lines
     continue
   fi
-  matrix_name=$(basename "$mtx_file_path" .mtx)
-  echo -n "$matrix_name," >> SpMM_GPU_SP.out # Write matrix name, start of new line
-  ../ASpT_SpMM_GPU/dspmm_32 "$mtx_file_path" 4 # Appends GFLOPs,diff_%,
-  ../ASpT_SpMM_GPU/dspmm_32 "$mtx_file_path" 8 # Appends GFLOPs,diff_%,
-  ../ASpT_SpMM_GPU/dspmm_32 "$mtx_file_path" 32 # Appends GFLOPs,diff_%,
-  ../ASpT_SpMM_GPU/sspmm_128 "$mtx_file_path" 128 # Appends GFLOPs,diff_%,
+  path="${BASEPATH}/${mtx_file_path}"
+  echo -n "$path," >> SpMM_GPU_SP.out # Write matrix name, start of new line
+  ../ASpT_SpMM_GPU/dspmm_32 "$path" 4 # Appends GFLOPs,diff_%,
+  ../ASpT_SpMM_GPU/dspmm_32 "$path" 8 # Appends GFLOPs,diff_%,
+  ../ASpT_SpMM_GPU/dspmm_32 "$path" 32 # Appends GFLOPs,diff_%,
+  ../ASpT_SpMM_GPU/sspmm_128 "$path" 128 # Appends GFLOPs,diff_%,
   sed -i '$ s/,$//' SpMM_GPU_SP.out # Remove the last comma from the line just written
   echo >> SpMM_GPU_SP.out # Add a newline to complete the line
 done < "$MATRIX_LIST_FILE"
