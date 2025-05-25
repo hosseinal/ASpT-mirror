@@ -17,9 +17,9 @@ module load python
 module load cuda/12.2
 
 cd ASpT_SpMM_GPU
-nvcc -std=c++11 -O3 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_80,code=sm_80 -gencode arch=compute_53,code=sm_53 sspmm_32.cu --use_fast_math -Xptxas "-v -dlcm=ca" -o sspmm_32
-nvcc -std=c++11 -O3 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_80,code=sm_80 -gencode arch=compute_53,code=sm_53 sspmm_128.cu --use_fast_math -Xptxas "-v -dlcm=ca" -o sspmm_128
-nvcc -std=c++11 -O3 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_80,code=sm_80 -gencode arch=compute_53,code=sm_53 dspmm_32.cu --use_fast_math -Xptxas "-v -dlcm=ca" -o dspmm_32
-nvcc -std=c++11 -O3 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_80,code=sm_80 -gencode arch=compute_53,code=sm_53 dspmm_128.cu --use_fast_math -Xptxas "-v -dlcm=ca" -o dspmm_128
+nvcc -std=c++11 -O3 -gencode arch=compute_80,code=sm_80 sspmm_32.cu --use_fast_math -Xptxas "-v -dlcm=ca" -o sspmm_32
+nvcc -std=c++11 -O3 -gencode arch=compute_80,code=sm_80 sspmm_128.cu --use_fast_math -Xptxas "-v -dlcm=ca" -o sspmm_128
+nvcc -std=c++11 -O3 -gencode arch=compute_80,code=sm_80 dspmm_32.cu --use_fast_math -Xptxas "-v -dlcm=ca" -o dspmm_32
+nvcc -std=c++11 -O3 -gencode arch=compute_80,code=sm_80 dspmm_128.cu --use_fast_math -Xptxas "-v -dlcm=ca" -o dspmm_128
 cd ..
 

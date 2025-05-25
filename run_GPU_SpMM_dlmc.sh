@@ -26,7 +26,6 @@ mkdir -p GPU_SpMM_dlmc_result # Ensure directory exists
 
 # Initialize main output files with headers
 echo "dataset,ASpT_GFLOPs(K=4),ASpT_diff_%%(K=4),ASpT_GFLOPs(K=8),ASpT_diff_%%(K=8),ASpT_GFLOPs(K=32),ASpT_diff_%%(K=32),ASpT_GFLOPs(K=128),ASpT_diff_%%(K=128)" > SpMM_GPU_SP.out
-echo "dataset,ASpT_GFLOPs(K=4),ASpT_diff_%%(K=4),ASpT_GFLOPs(K=8),ASpT_diff_%%(K=8),ASpT_GFLOPs(K=32),ASpT_diff_%%(K=32),ASpT_GFLOPs(K=128),ASpT_diff_%%(K=128)" > SpMM_GPU_DP.out
 
 # Single Precision Loop
 while read -r mtx_file_path; do
@@ -35,27 +34,12 @@ while read -r mtx_file_path; do
   fi
   matrix_name=$(basename "$mtx_file_path" .mtx)
   echo -n "$matrix_name," >> SpMM_GPU_SP.out # Write matrix name, start of new line
-  ../ASpT_SpMM_GPU/sspmm_128 "$mtx_file_path" 4 # Appends GFLOPs,diff_%,
-  ../ASpT_SpMM_GPU/sspmm_128 "$mtx_file_path" 8 # Appends GFLOPs,diff_%,
-  ../ASpT_SpMM_GPU/sspmm_128 "$mtx_file_path" 32 # Appends GFLOPs,diff_%,
+  ../ASpT_SpMM_GPU/dspmm_32 "$mtx_file_path" 4 # Appends GFLOPs,diff_%,
+  ../ASpT_SpMM_GPU/dspmm_32 "$mtx_file_path" 8 # Appends GFLOPs,diff_%,
+  ../ASpT_SpMM_GPU/dspmm_32 "$mtx_file_path" 32 # Appends GFLOPs,diff_%,
   ../ASpT_SpMM_GPU/sspmm_128 "$mtx_file_path" 128 # Appends GFLOPs,diff_%,
   sed -i '$ s/,$//' SpMM_GPU_SP.out # Remove the last comma from the line just written
   echo >> SpMM_GPU_SP.out # Add a newline to complete the line
-done < "$MATRIX_LIST_FILE"
-
-# Double Precision Loop
-while read -r mtx_file_path; do
-  if [ -z "$mtx_file_path" ]; then # Skip empty lines
-    continue
-  fi
-  matrix_name=$(basename "$mtx_file_path" .mtx)
-  echo -n "$matrix_name," >> SpMM_GPU_DP.out # Write matrix name, start of new line
-  ../ASpT_SpMM_GPU/dspmm_128 "$mtx_file_path" 4 # Appends GFLOPs,diff_%,
-  ../ASpT_SpMM_GPU/dspmm_128 "$mtx_file_path" 8 # Appends GFLOPs,diff_%,
-  ../ASpT_SpMM_GPU/dspmm_128 "$mtx_file_path" 32 # Appends GFLOPs,diff_%,
-  ../ASpT_SpMM_GPU/dspmm_128 "$mtx_file_path" 128 # Appends GFLOPs,diff_%,
-  sed -i '$ s/,$//' SpMM_GPU_DP.out # Remove the last comma from the line just written
-  echo >> SpMM_GPU_DP.out # Add a newline to complete the line
 done < "$MATRIX_LIST_FILE"
 
 # Finalize and Cleanup
