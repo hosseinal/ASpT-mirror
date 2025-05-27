@@ -1248,6 +1248,7 @@ if (ne/nc < 6 && vari < 40) {
 //fprintf(stdout, "%d,%d,%d,%d,", nr, nc, ne, mne);
 //        fprintf(stdout, "%f,%f,", tot_ms,(double)ne*2*sc/tot_ms/1000000);
         //fprintf(stdout, "%f,%f,", (double)ITER*(double)ne*2*sc/tot_ms/1000000,(double)ptot_ms/tot_ms);
+		fprintf(fpo, "%f,", tot_ms);
         fprintf(fpo, "%f,", (double)ITER*(double)ne*2*sc/tot_ms/1000000);
 
         cudaMemcpy(vout, _vout, sizeof(FTYPE)*nr*sc, cudaMemcpyDeviceToHost);
