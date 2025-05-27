@@ -1301,6 +1301,7 @@ for(int ik=0;ik<ITER;ik++) {
 }
 //fprintf(stdout, "%d,%d,%d,%d,", nr, nc, ne, mne);
 //        fprintf(stdout, "%f,%f,", tot_ms,(double)ne*2*sc/tot_ms/1000000);
+		fprintf(fpo, "%f,", tot_ms);
         fprintf(fpo, "%f,", (double)ITER*(double)ne*2*sc/tot_ms/1000000);
         fprintf(fpo2, "%f", (double)ptot_ms/tot_ms);
 
